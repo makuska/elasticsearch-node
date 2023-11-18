@@ -1,0 +1,17 @@
+version: "3.8"
+
+# list of services/containers
+services:
+  backend:
+    build:
+      context: ./server
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./server
+        target: /app
+    env_file:
+      - .env
