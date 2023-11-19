@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "~7.10.0",
     "@types/express": "^4.17.21",
     "@types/node": "^20.9.1",
     "cors": "^2.8.5",
