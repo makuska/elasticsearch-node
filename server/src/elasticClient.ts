@@ -22,4 +22,4 @@ const elasticClient: Client = new Client({
 //     console.error('error', error)
 //   })
 
-export default  elasticClient
+export default elasticClient

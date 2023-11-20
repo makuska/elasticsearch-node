@@ -1,9 +1,13 @@
-import { Router } from "express"
+import { Router } from "express";
+import { createIndex, listAllIndices } from "../controllers/elastic.controller";
 
 const elasticRoute: Router = Router({
   caseSensitive: false
 })
 
-elasticRoute.post("/create-index")
+const basePath: string = "/api/v1/index"
 
-export default elasticRoute
+elasticRoute.post(basePath, createIndex);
+elasticRoute.get(basePath, listAllIndices);
+
+export default elasticRoute;

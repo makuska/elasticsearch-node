@@ -5,3 +5,5 @@
 4. Connect Express with ElasticSearch using the `Elasticsearch Client`. Check [API docs](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html) for typescript support and implementation.
    * **EDIT**: Since the oss version is `7.10.2`, then the client must also be compatible with the ElasticSearch distribution.
 5. Move the logic away from the `server.ts` file and create routing, controllers and service files. Create elastic index and add more fault tolerance to the `elasticClient`.
+6. Get the API key from [USGS Earthquake API Home Page](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) and familiarize with the possibilities.
+7. Solve the issue for the `req` and `res` types in the `elastic.controller.ts`, read the TODO.
