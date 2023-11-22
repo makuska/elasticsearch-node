@@ -1,7 +1,7 @@
 import express, {Express} from 'express'
 import {ApiResponse} from "@elastic/elasticsearch";
 import elasticClient from "./elasticClient";
-import elasticRoute from "./routes/elastic.route";
+import elasticSearchIndexRoute from "./api/elasticSearchIndex/elastic.route";
 
 const app: Express = express()
 
@@ -26,7 +26,7 @@ async function listIndices(): Promise<void> {
 
 listIndices()
 
-app.use(elasticRoute)
+app.use(elasticSearchIndexRoute)
 
 app.get('/hello-world', (): string => {
   return 'Hello world!'
