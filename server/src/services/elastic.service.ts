@@ -13,10 +13,10 @@ class ElasticService {
    * and appropriate message
    *
    * @param {string} indexName - The name of the index to be created.
-   * @returns {Promise<IndexCreationResult>} A promise that resolves to an object containing
+   * @returns {Promise<GenericElasticSearchServiceResponse>} A promise that resolves to an object containing
    * the success status and an optional message.
    *
-   * @interface IndexCreationResult
+   * @interface GenericElasticSearchServiceResponse
    * @property {boolean} success - Indicates whether the index creation was successful.
    * @property {string | undefined} [message] - An optional message providing additional
    * information about the result.
@@ -44,8 +44,13 @@ class ElasticService {
   /**
    * Retrieves a list of all indices from the Elasticsearch cluster.
    *
-   * @returns A Promise resolving to either a JSON representation of the indices or a GenericElasticSearchServiceResponse.
-   * If successful, the response contains information about all indices. If there's an error, it includes an error message.
+   * @returns {Promise<GenericElasticSearchServiceResponse | JSON>} A promise that resolves to either a JSON representation
+   * of the indices or a GenericElasticSearchServiceResponse. If successful, the response contains information about all indices.
+   * If there's an error, it includes an error message.
+   *
+   * @interface GenericElasticSearchServiceResponse
+   * @property {boolean} success - Indicates whether the operation was successful.
+   * @property {string | undefined} [message] - An optional message providing additional information about the result.
    */
   public async listAllIndices(): Promise<JSON | GenericElasticSearchServiceResponse> {
     try {
@@ -53,10 +58,8 @@ class ElasticService {
       // "If this was intentional, convert the expression to unknown first."
       const parseResponse: unknown = response as unknown
       return parseResponse as JSON
-      // return response.body as JSON;
     } catch (error) {
       const errorMessage: string = `Error listing all indices, error: ${error}`
-      console.error(errorMessage)
       return { success: false, message: errorMessage }
     }
   }
