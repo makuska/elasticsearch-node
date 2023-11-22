@@ -5,5 +5,8 @@
 4. Connect Express with ElasticSearch using the `Elasticsearch Client`. Check [API docs](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html) for typescript support and implementation.
    * **EDIT**: Since the oss version is `7.10.2`, then the client must also be compatible with the ElasticSearch distribution.
 5. Move the logic away from the `server.ts` file and create routing, controllers and service files. Create elastic index and add more fault tolerance to the `elasticClient`.
-6. Get the API key from [USGS Earthquake API Home Page](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) and familiarize with the possibilities.
+6. Get ~~the API key~~(information about the API) from [USGS Earthquake API Home Page](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) and familiarize with the possibilities.
+   * Create mapping for the earthquake index.
 7. Solve the issue for the `req` and `res` types in the `elastic.controller.ts`, read the TODO.
+8. Set up a data pipeline in Kibana which will transform the GeoJSON data accordingly, read the `earthquake-USGS-GeoJSON_API.md` in the `docs` folder for more information.
+9. Crete a new API endpoint to get the data from the USGS API.
