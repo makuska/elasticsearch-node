@@ -7,6 +7,7 @@
 5. Move the logic away from the `server.ts` file and create routing, controllers and service files. Create elastic index and add more fault tolerance to the `elasticClient`.
 6. Get ~~the API key~~(information about the API) from [USGS Earthquake API Home Page](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) and familiarize with the possibilities.
    * Create mapping for the earthquake index.
-7. Solve the issue for the `req` and `res` types in the `elastic.controller.ts`, read the TODO.
-8. Set up a data pipeline in Kibana which will transform the GeoJSON data accordingly, read the `earthquake-USGS-GeoJSON_API.md` in the `docs` folder for more information.
-9. Crete a new API endpoint to get the data from the USGS API.
+7. Set up a data pipeline in Kibana which will transform the GeoJSON data accordingly, read the `earthquake-USGS-GeoJSON_API.md` in the `docs` folder for more information.
+8. Solve the issue for the `req` and `res` types in the `elastic.controller.ts`, read the TODO.
+9. Apply the created `earthquake_data_pipeline` to the `earthquakes` index.
+10. Crete a new API endpoint to get the data from the USGS API.
