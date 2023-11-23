@@ -1,0 +1,80 @@
+//PUT _ingest/pipeline/earthquake_data_pipeline
+{
+  "description": "USGS 30day API Earthquake data processing pipeline",
+  "processors": [
+    {
+      "rename": {
+        "field": "type",
+        "target_field": "feature_type",
+        "ignore_failure": true
+      }
+    },
+    {
+      "rename": {
+        "field": "properties.mag",
+        "target_field": "mag"
+      }
+    },
+    {
+      "rename": {
+        "field": "properties.place",
+        "target_field": "place"
+      }
+    },
+    {
+      "rename": {
+        "field": "properties.time",
+        "target_field": "time"
+      }
+    },
+    {
+      "rename": {
+        "field": "properties.url",
+        "target_field": "url"
+      }
+    },
+    {
+      "rename": {
+        "field": "properties.sig",
+        "target_field": "sig"
+      }
+    },
+    {
+      "rename": {
+        "field": "properties.type",
+        "target_field": "type"
+      }
+    },
+    {
+      "rename": {
+        "field": "geometry.coordinates.2",
+        "target_field": "depth"
+      }
+    },
+    {
+      "set": {
+        "field": "coordinates.lat",
+        "value": "{{geometry.coordinates.1}}"
+      }
+    },
+    {
+      "set": {
+        "field": "coordinates.lon",
+        "value": "{{geometry.coordinates.0}}"
+      }
+    },
+    {
+      "remove": {
+        "field": ["properties", "geometry", "feature_type", "id"],
+        "ignore_missing": true
+      }
+    },
+    {
+      "date": {
+        "field": "time",
+        "formats": ["UNIX_MS"],
+        "target_field": "time"
+      }
+    }
+  ]
+}
