@@ -9,5 +9,7 @@
    * Create mapping for the earthquake index.
 7. Set up a data pipeline in Kibana which will transform the GeoJSON data accordingly, read the `earthquake-USGS-GeoJSON_API.md` in the `docs` folder for more information.
 8. Solve the issue for the `req` and `res` types in the `elastic.controller.ts`, read the TODO.
-9. Apply the created `earthquake_data_pipeline` to the `earthquakes` index.
-10. Crete a new API endpoint to get the data from the USGS API.
+<br>~~9. Apply the created `earthquake_data_pipeline` to the `earthquakes` index.~~ 
+   * **EDIT**: Aligns with The new task 9. 
+9. Crete a new API endpoint to get the data from the USGS API.
+   9.1. Reformat API code, read the [TODO.md](server/src/api/TODO.md).

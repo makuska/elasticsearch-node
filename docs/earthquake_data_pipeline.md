@@ -1,7 +1,7 @@
-# This is the docs for the `earthquake_data_pipeline`
-Since the ful response contains way too much information, we only need to store the necessary data and this is where the ingest pipeline comes into play.
+# `earthquake_data_pipeline` docs
+Since the full response contains way too much information, we only need to store the necessary data and this is where the ingest pipeline comes into play.
 
-Because we are using the OSS versions of ElasticSearch and Kibana the security setup is quite a hassle, hence why the good old CLI comes to rescue.
+Because we are using the OSS versions of ElasticSearch and Kibana the security setup is quite a hassle, hence this is where the good old CLI comes to rescue.
 
 This is the full sample response from the USGS API:
 ```json

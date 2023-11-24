@@ -13,7 +13,7 @@ export interface GenericResponse {
   // Optional, but highly recommended
   message?: string
   // Optional return from the function
-  return?: any
+  return?: JSON
   statusCode: number
 }
 
