@@ -1,10 +1,10 @@
 import {GenericResponse} from "../interfaces";
 import {
-  depth, EarthquakeDataResponse, EarthquakeFeature,
-  EarthquakeFeatureProperties, EarthquakeIndexObject, latitude, longitude
+  EarthquakeDataResponse, EarthquakeFeature, EarthquakeIndexObject
 } from "./earthquake.interface";
 import elasticClient from "../../elasticClient";
 import EarthquakeObject from "./earthquake.model";
+import {RequestParams} from "@elastic/elasticsearch";
 
 class EarthquakeService {
   public async fetchEarthquakeDataFromUSGS(): Promise<GenericResponse> {
@@ -18,14 +18,13 @@ class EarthquakeService {
       })
 
       if (res.ok) {
-        //TODO THIS METHOD's SOLE PURPOSE IS TO FETCH DATA ONLY... BREAK UP THE FUNCTION INTO SMALLER FUNCTIONS!!!
         const responseData: EarthquakeDataResponse = await res.json()
-        const resultsId: string = responseData.features[0].id
-        const earthquakeCoordinates: [longitude, latitude, depth] = responseData.features[0].geometry.coordinates
-        const desiredData: EarthquakeFeatureProperties[] = responseData.features.map((feature: EarthquakeFeature) => feature.properties)
-        // TODO call out the createEarthquakeIndexObject
-        await this.createEarthquakeIndexObject(responseData)
-        return { return: desiredData, statusCode: responseData.metadata.status }
+
+        for (let feature of responseData.features) {
+          const earthquakeObject: EarthquakeIndexObject = await this.createEarthquakeIndexObject(feature)
+          await this.indexEarthquakeData(earthquakeObject, feature.id)
+        }
+        return { return: 'no idea yet', statusCode: responseData.metadata.status }
       } else {
         const errorMessage: string = await res.text()
         return { message: `An unexpected error occurred during the request: ${errorMessage}`, statusCode: res.status }
@@ -35,26 +34,54 @@ class EarthquakeService {
     }
   }
 
+  /**
+  * @Deprecated The implementation/method still works but won't be necessary in this project at the moment.
+  */
   private async indexEarthquakeData(earthquakeObject: EarthquakeIndexObject, earthquakeId: string): Promise<GenericResponse> {
+    console.warn("Calling deprecated function!");
     try {
-      await elasticClient.index({
+      const document: RequestParams.Index = {
         index: 'earthquakes',
         id: earthquakeId,
         body: earthquakeObject,
         pipeline: 'earthquake_data_pipeline'
-      })
+      }
 
-      // TODO add some additional checks to make sure that the data was indexed correctly
-      return {statusCode: 200, message: `Earthquake data indexed successfully!`}
+      elasticClient.index(document, (error: Error) => {
+        if (error) {
+          return { statusCode: 500, message: `Failed to index earthquake document. Result: ${error}` };
+        }
+      })
+      return { statusCode: 200, message: `Earthquake data indexed successfully!` }
+      // elasticClient.index(document, (error: Error, result: any | IndexResponse) => {
+      //   if (error) {
+      //     return { statusCode: 500, message: `Failed to index earthquake document. Result: ${error}` };
+      //   } else {
+      //     return { statusCode: 200, message: `Earthquake data indexed successfully!` }
+      //   }
+      // })
+      // ///////////////////      :)       ///////////////////
+      // const response: RequestParams.Index = await elasticClient.index({
+      //   index: 'earthquakes',
+      //   id: earthquakeId,
+      //   body: earthquakeObject,
+      //   pipeline: 'earthquake_data_pipeline'
+      // });
+
+      // if (response.result === 'created' || response.result === 'updated') {
+      //   return { statusCode: 200, message: `Earthquake data indexed successfully!` };
+      // } else {
+      //   return { statusCode: 500, message: `Failed to index earthquake data. Result: ${response.result}` };
+      // }
     } catch (error) {
-      return {statusCode: 500, message: `There was an error indexing data to 'earthquakes' index, e: ${error}`}
+      return { statusCode: 500, message: `There was an error indexing data to 'earthquakes' index, e: ${error}` };
     }
-    
   }
 
-  private async createEarthquakeIndexObject(earthquakeResponseData: EarthquakeDataResponse): Promise<EarthquakeIndexObject> {
-    const { mag, place, time, url, sig, type } = earthquakeResponseData.features[0].properties
-    const [longitude, latitude, depth] = earthquakeResponseData.features[0].geometry.coordinates
+
+  private async createEarthquakeIndexObject(feature: EarthquakeFeature): Promise<EarthquakeIndexObject> {
+    const { mag, place, time, url, sig, type } = feature.properties
+    const [longitude, latitude, depth] = feature.geometry.coordinates
 
     return new EarthquakeObject(
       mag, place, time, url, sig, type, depth, [longitude, latitude]
