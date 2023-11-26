@@ -1,6 +1,6 @@
 import elasticClient from "../../elasticClient";
 import {ApiResponse, RequestParams} from "@elastic/elasticsearch";
-import {ElasticSearchResponse} from "../interfaces";
+import {ElasticSearchResponse} from "./elastic.interface";
 
 class ElasticSearchIndexService {
 

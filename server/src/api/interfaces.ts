@@ -13,20 +13,8 @@ export interface GenericResponse {
   // Optional, but highly recommended
   message?: string
   // Optional return from the function
-  return?: JSON
+  return?: JSON | any
   statusCode: number
-}
-
-/**
- * ElasticSearchResponse extends the GenericResponse interface
- * with a `success` field that indicates whether the Elasticsearch operation was successful.
- *
- * @interface ElasticSearchResponse
- * @extends {GenericResponse}
- * @property {boolean} success - Indicates whether the Elasticsearch operation was successful.
- */
-export interface ElasticSearchResponse extends GenericResponse {
-  success: boolean
 }
 
 /**

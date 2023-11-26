@@ -12,4 +12,4 @@
 <br>~~9. Apply the created `earthquake_data_pipeline` to the `earthquakes` index.~~ 
    * **EDIT**: Aligns with The new task 9. 
 9. Crete a new API endpoint to get the data from the USGS API.
-   9.1. Reformat API code, read the [TODO.md](server/src/api/TODO.md).
+   9.1. ~~Reformat API code, read the [TODO.md]~~.

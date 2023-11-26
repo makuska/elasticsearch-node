@@ -1,5 +1,5 @@
 import ElasticSearchIndexService from "./elastic.service";
-import {ElasticSearchResponse} from "../interfaces"
+import {ElasticSearchResponse} from "./elastic.interface"
 import { Request, Response } from "express";
 
 /**
